@@ -28,3 +28,8 @@
 (equal (assoc :one *my-map*)
        (my-assoc :one *my-map*))
 
+(defun my-count (list)
+  (cond ((equal list nil) 0)
+	(t (1+ (my-count (cdr list))))))
+
+(my-count (my-range 1 100))
