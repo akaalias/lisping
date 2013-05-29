@@ -1,0 +1,8 @@
+(defun guess-my-number ()
+  ())
+
+(defun bigger ()
+  ())
+
+(defun smaller ()
+  ())

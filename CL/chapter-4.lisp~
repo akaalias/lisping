@@ -1,0 +1,73 @@
+(defparameter *foods* '(CHICKEN BEEF PORK VEGGIES FRUIT))
+(if '()
+    'true
+    'false)
+
+(if ()
+    't
+    'f)
+
+(if '(1)
+    't
+    'f)
+
+(defun my-length (list)
+  (if list
+      (1+ (my-length (cdr list)))
+      0))
+
+(my-length *foods*)
+
+(and (eq '() nil)
+     (eq '() ())
+     (eq '() nil))
+
+(if (= (+ 1 2) 3)
+    't
+    'f)
+
+(if '(1)
+    't
+    'f)
+
+(if '()
+    't
+    'f)
+
+(oddp 5)
+
+(if (oddp 6)
+    'odd
+    'even)
+
+(if (oddp 5)
+    'odd
+    (/ 1 1))
+
+(defvar *number-was-odd* nil)
+
+(if (oddp 7)
+    (progn (setf *number-was-odd* t)
+	   'odd-number)
+    (progn (setf *number-was-odd* nil)
+    'even-number))
+
+(defvar *number-is-odd* nil)
+
+(when (oddp 5)
+  (setf *number-is-odd* t)
+  'odd-number)
+
+*number-is-odd*
+
+(defvar *arch-enemy* nil)
+(defun pudding-eater (person)
+  (cond ((eq person 'henry) (setf *arch-enemy 'stupid-lisp-alien) '(curse you lisp alien)
+	 ((eq person 'johnny) (setf *arch-enemy* 'old-johnny) '(i hope you choke))
+	 (t '(why you eat my pudding stranger?)))))
+
+(pudding-eater 'john)
+
+
+	 
+	 

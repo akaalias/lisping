@@ -1,0 +1,11 @@
+(defun my-assoc (key list)
+  (cond ((eq list nil) nil)
+	((eq key (caar list)) (cadar list))
+	(t (my-assoc key (cdr list)))))
+
+(defun my-range (start end)
+  (cond ((= start end) (list end))
+	(t (cons start (my-range (1+ start) end)))))
+
+(remove-if #'oddp (my-range 1 10))
+
