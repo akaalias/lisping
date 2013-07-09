@@ -85,7 +85,7 @@
 
 (defun multirember (a lat)
   (cond ((null lat) '())
-	(t (cond ((eq (car lat) a) (multirember a (cdr lat)))
+	(t (cond ((equal? (car lat) a) (multirember a (cdr lat)))
 		 (t (cons (car lat) (multirember a (cdr lat))))))))
 
 (multirember 'a '(a b c e a))
@@ -238,5 +238,297 @@
 
 (rempick 4 (range 1 10))
     
+(defun no-nums (lat)
+  (cond ((null lat) '())
+	(t (cond ((numberp (car lat)) (no-nums (cdr lat)))
+		 (t (cons (car lat) 
+			  (no-nums (cdr lat))))))))
 
+(no-nums '(1 2 3 abc 1 2 3 def))
+(no-nums '(1 2 3))
+
+(defun all-nums (lat)
+  (cond ((null lat) '())
+	(t (cond ((numberp (car lat)) (cons (car lat)
+					    (all-nums (cdr lat))))
+		 (t (all-nums (cdr lat)))))))
+
+(all-nums '(1 2 3 a))
+
+(defun equan? (a1 a2)
+  (cond 
+    ((and (numberp a1) 
+	  (numberp a2))
+     (= a1 a2))
+    ((or (numberp a1)
+	 (numberp a2))
+     nil)
+    (t (eq a1 a2))))
+
+(defun occur (a lat)
+  (cond 
+    ((null lat) 0)
+    (t (cond ((equan? (car lat) a) (1+ (occur a (cdr lat))))
+	     (t (occur a (cdr lat)))))))
+
+(occur 'a '(b c ))
+
+(defun one? (n)
+   (= n 1))
+
+(one? 0)
+(one? 1)
+
+(defun rempick (n lat)
+  (cond 
+    ((one? n) (cdr lat))
+    (t (cons (car lat) (rempick (1- n) (cdr lat))))))
+
+(rempick 3 (range 1 10))
+
+;; Chapter 5
+
+(defun rember* (a l)
+  (cond 
+    ((null l) '())
+    ((atom (car l))
+     (cond 
+       ((eq (car l) a) 
+	(rember* a (cdr l)))
+       (t (cons (car l)
+		(rember* a (cdr l))))))
+    (t (cons (rember* a (car l))
+	     (rember* a (cdr l))))))
+
+(rember* 'a '((a b) (c d) a (b a)))
+(lat? '(a b c))
+(lat? '((a b) (c d) a (b a)))
+
+
+(defun insertR* (new old l)
+  (cond ((null l) '())
+	((atom (car l)) 
+	 (cond ((eq (car l) old) (cons old 
+				       (cons new 
+					     (insertR* new old (cdr l)))))
+	       (t (cons (car l) 
+			(insertR* new old (cdr l))))))
+	(t (cons (insertR* new old (car l))
+		 (insertR* new old (cdr l))))))
+
+(insertR* 'a 'b '(((b (b) c)) b))
+
+(defun occur* (a l)
+  (cond ((null l) 0)
+	((atom (car l))
+	 (cond ((eq (car l) a)
+		(1+ (occur* a (cdr l))))
+	       (t (occur* a (cdr l)))))
+	(t (+ (occur* a (car l))
+	      (occur* a (cdr l))))))
+
+(occur* 'a '((a b c) d (e f g a)))
+
+(defun subst* (new old l)
+  (cond ((null l) '())
+	((atom (car l))
+	 (cond ((eq (car l) old) (cons new
+				       (subst* new old (cdr l))))
+	       (t (cons (car l)
+			(subst* new old (cdr l))))))
+	(t (cons (subst* new old (car l))
+		 (subst* new old (cdr l))))))
+
+(subst* 'a 'b '(((((((((((((((((((b c))))))))))))))))))))
+
+(defun insertL* (new old l)
+  (cond ((null l) '())
+	((atom (car l)) 
+	 (cond ((eq (car l) old) (cons new 
+				       (cons old
+					     (insertL* new old (cdr l)))))
+	       (t (cons (car l) 
+			(insertL* new old (cdr l))))))
+	(t (cons (insertL* new old (car l))
+		 (insertL* new old (cdr l))))))
+
+(insertL* 'a 'b '(((b c))))
+
+
+(defun member* (a l)
+  (cond ((null l) nil)
+	((atom? (car l))
+	 (or (eq (car l) a)
+	     (member* a (cdr l))))
+	(t (or (member* a (car l))
+	       (member* a (cdr l))))))
+
+(member* 'a '((((a)))))
+
+(defun leftmost (l)
+  (cond ((atom? (car l)) (car l))
+	(t (leftmost (car l)))))
+
+(leftmost '(((a)(((((b)c)))))))
+	 
+(defun eqlist? (l1 l2)
+  (cond ((and (null l1) (null l2)) t)
+	((or (null l1) (null l2)) nil)
+	((and (atom? (car l1))
+	      (atom? (car l2)))
+	 (and (equan? (car l1) (car l2))
+	      (eqlist? (cdr l1) (cdr l2))))
+	((or (atom? (car l1))
+	     (atom? (car l2)))
+	 nil)
+	(t 
+	 (and (eqlist? (car l1) (car l2))
+	      (eqlist? (cdr l1) (cdr l2))))))
+
+(eqlist? '(a b c) '(a b c))
+
+(defun equal? (s1 s2)
+  (cond ((and (atom? s1) (atom? s2))
+	 (equan? s1 s2))
+	((or (atom? s1) nil)
+	 (atom? s2) nil)
+	(t (eqlist? s1 s2))))
+
+(equal? '(a b) '(a b c))
+
+(defun eqlist? (l1 l2)
+  (cond ((and (null l1) (null l2)) t)
+	((or (null l1) (null l2)) nil)
+	(t
+	 (and (equal? (car l1) (car l2))
+	      (eqlist? (cdr l1) (cdr l2))))))
+
+(eqlist? '(a) '(a))
+
+(defun rember (s l)
+  (cond ((null l) nil)
+	((equal? (car l) s) (cdr l))
+	(t 
+	 (cons (car l)
+	       (rember s (cdr l))))))
+
+(rember 'a '(a b c a))
+
+;; Chapter 6
+
+(defun ^ (a b)
+  (expt a b))
+
+(^ 3 3)
+
+(defun numbered? (aexp)
+  (cond ((atom? aexp) (numberp aexp))
+	((eq (car (cdr aexp)) '+)
+	 (and (numbered? (car aexp))
+	      (numbered? (car (cdr (cdr aexp))))))
+	((eq (car (cdr aexp)) '*)
+	 (and (numbered? (car aexp))
+	      (numbered? (car (cdr (cdr aexp))))))
+	((eq (car (cdr aexp)) '^)
+	 (and (numbered? (car aexp))
+	      (numbered? (car (cdr (cdr aexp))))))
+	(t (and (numbered? (car aexp))
+		(numbered? (car (cdr (cdr aexp))))))))
+
+(numbered? '(1 + 2 (1 + 2 (2))))
+
+(defun value (nexp)
+  (cond ((atom nexp) nexp)
+	((eq (car (cdr nexp)) '+)
+	 (+ (value (car nexp))
+	    (value (car (cdr (cdr nexp))))))
+	((eq (car (cdr nexp)) '*)
+	 (* (value (car nexp))
+	    (value (car (cdr (cdr nexp))))))
+	(t
+	 (^ (value (car nexp))
+	    (value (car (cdr (cdr nexp))))))))
+
+(value '(1 + (1 + 3)))
+
+(defun 1st-sub-exp (aexp)
+  (car (cdr aexp)))
+
+(defun 2nd-sub-exp (aexp)
+  (car (cdr (cdr aexp))))
+
+(defun operator (aexp)
+  (car aexp))
+
+(defun value (nexp)
+  (cond ((atom nexp) nexp)
+	((eq (operator nexp) '+)
+	 (+ (value (1st-sub-exp nexp))
+	    (value (2nd-sub-exp nexp))))
+	((eq (operator nexp) '*)
+	 (* (value (1st-sub-exp nexp))
+	    (value (2nd-sub-exp nexp))))
+	(t 
+	 (^ (value (1st-sub-exp nexp))
+	    (value (2nd-sub-exp nexp))))))
+
+(value '(+ 1 (+ 2 3)))
+
+(defun sero? (n)
+    (null n))
+
+(defun edd1 (n)
+  (cons '() n))
+
+(edd1 (edd1 (edd1 '())))
+
+(defun zub1 (n)
+  (cdr n))
+
+(zub1 (edd1 (edd1 (edd1 '()))))
+
+(defun plus (n m)
+  (cond ((sero? m) n)
+	(t (edd1 (plus n (zub1 m))))))
+
+(plus '(()) '(() () ()))
+    
+(defun member? (a lat)
+  (cond ((null lat) nil)
+	(t (or (equal? (car lat) a)
+	       (member? a (cdr lat))))))
+
+(member? 1 '())
+
+(defun set? (lat)
+    (cond ((null lat) t)
+	  ((member? (car lat) (cdr lat)) nil)
+	  (t (set? (cdr lat)))))
+
+(set?  '(a b c 1 1))
+(set? (range 1 100))
+
+(defun makeset (lat)
+  (cond ((null lat) '())
+	((member? (car lat) (cdr lat)) (makeset (cdr lat)))
+	(t (cons (car lat) (makeset (cdr lat))))))
+
+(makeset (cons 1 (range 1 10)))
+	 
+(defun makeset (lat)
+  (cond ((null lat) '())
+	(t 
+	 (cons (car lat)
+	       (makeset 
+		(multirember (car lat) (cdr lat)))))))
+
+(makeset '(1 2 3 4 5 6 7 1 7 8 9))
+
+(defun subset? (set1 set2)
+  (cond ((null set1) t)
+	((member? (car set1) set2) (subset? (cdr set1) set2))
+	(t 
+	 nil)))
+
+(subset? '(a b) '(c d a b))
 
