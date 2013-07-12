@@ -34,6 +34,14 @@
 	(t (cons (car (car l)) 
 		 (firsts (cdr l))))))
 
+(defun seconds (l)
+  (cond ((null l) '())
+	(t (cons (car (cdr (car l)))
+		 (seconds (cdr l))))))
+
+(seconds '((a b) (c d)))
+
+
 (defun keys (assoc-list)
   (firsts assoc-list))
 
@@ -98,7 +106,7 @@
 		 (t (cons (car lat)
 			  (multiinsertR new old (cdr lat))))))))
 
-(multiinsertr 'fried 'fish '(chips and fish))
+(multiinsertr 'fried 'fish '(fish chips and fish))
 
 (defun multiinsertL (new old lat)
   (cond ((null lat) '())
@@ -126,12 +134,14 @@
 ;; interlude: Can I write my own map function???
 (defun my-map (f ls)
   (cond ((null ls) '())
-	(t (cons (funcall f (car ls)) (my-map f (cdr ls))))))
+	(t (cons (funcall f (car ls)) 
+		 (my-map f (cdr ls))))))
 
 (defun 10+ (x)
   (+ 10 x))
 
 (my-map #'10+ '(1 2 3 4 5 6 7 8))
+;; => (11 12 13 14 15 16 17 18)
 			       
 ;; 
 (1+ 1)
@@ -354,7 +364,6 @@
 
 (insertL* 'a 'b '(((b c))))
 
-
 (defun member* (a l)
   (cond ((null l) nil)
 	((atom? (car l))
@@ -363,14 +372,14 @@
 	(t (or (member* a (car l))
 	       (member* a (cdr l))))))
 
-(member* 'a '((((a)))))
+(member* 'a '((((b))(a))))
 
 (defun leftmost (l)
   (cond ((atom? (car l)) (car l))
 	(t (leftmost (car l)))))
 
 (leftmost '(((a)(((((b)c)))))))
-	 
+
 (defun eqlist? (l1 l2)
   (cond ((and (null l1) (null l2)) t)
 	((or (null l1) (null l2)) nil)
@@ -526,9 +535,214 @@
 
 (defun subset? (set1 set2)
   (cond ((null set1) t)
-	((member? (car set1) set2) (subset? (cdr set1) set2))
+	((member? (car set1) set2) 
+	 (subset? (cdr set1) set2))
 	(t 
 	 nil)))
 
 (subset? '(a b) '(c d a b))
 
+(defun eqset? (set1 set2)
+  (and (subset? set1 set2)
+       (subset? set2 set1)))
+
+(eqset? '(A B C) '(B C A))
+
+(defun count-atoms* (l)
+  (cond ((null l) 0)
+	((atom? (car l))
+	 (1+ (count-atoms* (cdr l))))
+	(t 
+	 (+ (count-atoms* (car l))
+	    (count-atoms* (cdr l))))))
+
+(count-atoms* (range 1 10))
+
+(defun intersect? (set1 set2)
+  (cond ((null set1) nil)
+        (t
+	 (or (member? (car set1) set2)
+	     (intersect? (cdr set1) set2)))))
+
+(intersect? '(a b) '(a b c d e))
+
+(defun my-map (fn l)
+  (cond ((null l) '())
+	(t (cons (funcall fn (car l))
+		 (my-map fn (cdr l))))))
+
+(my-map #'1+ '(1 2 3 4)) ;; => (2 3 4 5)
+
+
+(defun intersect (set1 set2)
+  (cond ((null set1) '())
+	((member? (car set1) set2) (cons (car set1) 
+					 (intersect (cdr set1) set2)))
+	(t (intersect (cdr set1) (cdr set2)))))
+
+(intersect '(1 2 3) '(2 3 4 5 1))
+
+(defun union+ (set1 set2)
+  (cond ((null set1) '())
+	((member? (car set1) set2) (union (cdr set1) set2))
+	(t (cons (car set1) (union (cdr set1) set2)))))
+
+(union+ '(1 2 3) '(2 3 4 5))
+
+(defun intersectall (l-set)
+  (cond ((null (cdr l-set)) (car l-set))
+	(t (intersect (car l-set)
+		      (intersectall (cdr l-set))))))
+
+(intersectall '((1 2)
+		(2 1)
+		(1 2)
+		(1 2 4 5 6)))
+	 
+(defun a-pair? (x)
+  (cond ((null x) nil)
+	((atom? x) nil)
+	((null (cdr x)) nil)
+	((null (cdr (cdr x))) t)
+	(t nil)))
+
+(a-pair? '(a (b) (c)))
+
+(defun first~ (x)
+  (car x))
+
+(defun second~ (x)
+  (car (cdr x)))
+
+(defun third~ (x)
+  (car (cdr (cdr x))))
+
+(defun build (s1 s2)
+  (cons s1 (cons s2 '())))
+
+(first~ (build 'a '(b)))
+(second~ (build 'a '(b)))
+(third~ (build 'a '(b)))
+
+(defun fun? (rel)
+  (set? (firsts rel)))
+
+(fun? '((a b)
+	(c d)
+	(e f)))
+
+(defun revrel (rel)
+  (cond ((null rel) '())
+	(t (cons (build (second (car rel))
+			(first (car rel)))
+		 (revrel (cdr rel))))))
+
+(revrel '((1 2) (3 4) (5 6)))
+
+(defun revpair (pair)
+  (build (second pair)
+	 (first pair)))
+
+(defun revrel (rel)
+  (cond ((null rel) '())
+	(t (cons (revpair (car rel))
+		 (revrel (cdr rel))))))
+
+
+				
+(defun fullfun? (fun)
+  (set? (seconds fun)))
+
+(one-to-one? '((a b) (c f)))
+
+(defun one-to-one? (fun)
+  (fun? (revrel fun)))
+
+
+(equal '(1) '(1))
+
+;; Chapter 8 LTU
+
+(defun rember-f (test? a l)
+  (cond ((null l) nil)
+	((funcall test? (car l) a) (rember-f test? a (cdr l)))
+	(t (cons (car l) 
+		 (rember-f test? a (cdr l))))))
+
+(rember-f #'equal 'a '(a (b) c a))
+(rember-f #'= '1 '(1 2 3 4 5 1))
+
+(defun eq?-c (a)
+  (lambda (x)
+    (eq x a)))
+
+(setq eq?-salad (eq?-c 'salad))
+
+(funcall (eq?-c 'salad) 'salad)
+
+(defun rember-f (test?)
+  (lambda (a l)
+    (cond ((null l) '())
+	  ((funcall test? (car l) a) (funcall (rember-f test?) a (cdr l)))
+	  (t (cons (car l) (funcall (rember-f test?) a (cdr l)))))))
+
+(setq rember-eq (rember-f #'eq))
+(setq rember-equal (rember-f #'equal))
+
+(funcall rember-eq 1 '(1 1 1 2 3 4  1 2 123 12))
+(funcall rember-equal '(a b) '((a b) (c d)))
+(funcall (rember-f #'eq) '1 '(1 2 3 4)) 
+
+
+(defun seqL (new old l)
+  (cons new (cons old l)))
+
+(defun seqR (new old l)
+  (cons old (cons new l)))
+
+
+(defun insert-g (seq)
+  (lambda (new old l)
+    (cond ((null l) '())
+	  ((eq (car l) old) (funcall seq new old (cdr l)))
+	  (t 
+	   (cons (car l) 
+		 (funcall (insert-g seq) new old (cdr l)))))))
+
+(funcall (insert-g #'seqL) 'a 'b '(b c d e))
+(funcall (insert-g #'seqR) 'b 'a '(a c d e))
+
+(setq insertL (insert-g (lambda (new old l)
+			  (cons new (cons old l)))))
+
+(funcall insertL 'a 'b '(b c d e))
+
+(defun seqS (new old l)
+  (cons new l))
+
+(setq subst (insert-g #'seqS))
+
+(funcall subst 'a 'b '(b c d e))
+	   
+(defun seqrem (new old l)
+  l)
+
+(setq rem (insert-g #'seqrem))
+
+(funcall rem 'a 'b '(a b c d e))
+
+(defun atom-to-function (x)
+  (cond ((eq x '+) #'+)
+	((eq x '*) #'*)
+	(t #'^)))
+
+(funcall (atom-to-function '+) 3 4)
+
+(defun value (nexp)
+  (cond ((atom? nexp) nexp)
+	(t (funcall (atom-to-function (operator nexp))
+		    (value (1st-sub-exp nexp))
+		    (value (2nd-sub-exp nexp))))))
+
+(value '(+ 1 10))
+				     
