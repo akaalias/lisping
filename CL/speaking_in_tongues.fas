@@ -1,0 +1,88 @@
+(|SYSTEM|::|VERSION| '(20080430.))
+#0Y_ #0Y |CHARSET|::|UTF-8|
+#Y(#:|1 2 (DEFVAR *CYPHER* "ejp mysljylc kd kxveddknmc re jsicpdrysi rbcpc ypc rtcsra dkh wyfrepkym veddknkmkrkcd de kr kd eoya kw aej tysr re ujdr lkgc jv z q 1 2 3 4 5 6 7 8 9 0")-1|
+   #24Y(00 00 00 00 00 00 00 00 20 01 DA 31 62 DB 8C 57 04 DB DC 31 5A C6 19
+        01)
+   ((|COMMON-LISP|::|SPECIAL| |COMMON-LISP-USER|::|*CYPHER*|)
+    |COMMON-LISP-USER|::|*CYPHER*|
+    "ejp mysljylc kd kxveddknmc re jsicpdrysi rbcpc ypc rtcsra dkh wyfrepkym veddknkmkrkcd de kr kd eoya kw aej tysr re ujdr lkgc jv z q 1 2 3 4 5 6 7 8 9 0")
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|4 5 (DEFVAR *KEY* "our language is impossible to understand there are twenty six factorial possibilities so it is okay if you want to just give up q z 1 2 3 4 5 6 7 8 9 0")-2|
+   #24Y(00 00 00 00 00 00 00 00 20 01 DA 31 62 DB 8C 57 04 DB DC 31 5A C6 19
+        01)
+   ((|COMMON-LISP|::|SPECIAL| |COMMON-LISP-USER|::|*KEY*|)
+    |COMMON-LISP-USER|::|*KEY*|
+    "our language is impossible to understand there are twenty six factorial possibilities so it is okay if you want to just give up q z 1 2 3 4 5 6 7 8 9 0")
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|7 9 (DEFUN INTERLEAVE (L1 L2) ...)-3|
+   #20Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 DA DC 32 9C C5 19 01)
+   (|COMMON-LISP-USER|::|INTERLEAVE| |SYSTEM|::|REMOVE-OLD-DEFINITIONS|
+    #Y(|COMMON-LISP-USER|::|INTERLEAVE|
+       #35Y(00 00 00 00 02 00 00 00 26 03 92 02 06 00 19 03 93 02 7A 94 02 94
+            02 00 5D 7A 95 03 95 03 28 70 5D 19 03)
+       () (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|)
+       (|COMMON-LISP-USER|::|L1| |COMMON-LISP-USER|::|L2|) |COMMON-LISP|::|NIL|
+       1))
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|11 14 (DEFVAR *PAIRS* (REMOVE-DUPLICATES # :KEY ...))-4|
+   #41Y(00 00 00 00 00 00 00 00 20 01 DA 31 62 DB 8C 57 15 DB 6B 02 DD 72 3B 6B
+        04 DD 72 3B 70 05 38 06 CB FA 72 6F 31 5A C6 19 01)
+   ((|COMMON-LISP|::|SPECIAL| |COMMON-LISP-USER|::|*PAIRS*|)
+    |COMMON-LISP-USER|::|*PAIRS*| |COMMON-LISP-USER|::|*CYPHER*|
+    |COMMON-LISP|::|LIST| |COMMON-LISP-USER|::|*KEY*|
+    |COMMON-LISP-USER|::|INTERLEAVE| #.#'|COMMON-LISP|::|CAR|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|17 19 (DEFUN TRANSLATE-CHARACTER (C) ...)-5|
+   #20Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 DA DC 32 9C C5 19 01)
+   (|COMMON-LISP-USER|::|TRANSLATE-CHARACTER|
+    |SYSTEM|::|REMOVE-OLD-DEFINITIONS|
+    #Y(|COMMON-LISP-USER|::|TRANSLATE-CHARACTER|
+       #32Y(00 00 00 00 01 00 00 00 26 02 AD 6B 00 38 03 8D C8 0B AD 6B 00 38
+            03 31 C8 5C 5B 19 02 C6 19 02)
+       (|COMMON-LISP-USER|::|*PAIRS*| #\?)
+       (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|)
+       (|COMMON-LISP-USER|::|C|) |COMMON-LISP|::|NIL| 1))
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|21 22 (DEFUN TRANSLATE-STRING (S) ...)-6|
+   #20Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 DA DC 32 9C C5 19 01)
+   (|COMMON-LISP-USER|::|TRANSLATE-STRING| |SYSTEM|::|REMOVE-OLD-DEFINITIONS|
+    #Y(|COMMON-LISP-USER|::|TRANSLATE-STRING|
+       #24Y(00 00 00 00 01 00 00 00 26 02 99 00 AE DB 72 3B 73 00 16 DC 32 3B
+            19 02)
+       (|COMMON-LISP-USER|::|TRANSLATE-CHARACTER| |COMMON-LISP|::|LIST|
+        |COMMON-LISP|::|STRING|)
+       (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|)
+       (|COMMON-LISP-USER|::|S|) |COMMON-LISP|::|NIL| 1))
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|24 31 (DEFUN TRANSLATE-FILE (IN) ...)-7|
+   #20Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 DA DC 32 9C C5 19 01)
+   (|COMMON-LISP-USER|::|TRANSLATE-FILE| |SYSTEM|::|REMOVE-OLD-DEFINITIONS|
+    #Y(|COMMON-LISP-USER|::|TRANSLATE-FILE|
+       #78Y(03 00 01 00 01 00 00 00 26 02 63 AE 38 06 72 0B 53 2A AE 63 38 02
+            71 82 93 00 0F AC 6F 00 84 04 AF 63 38 02 80 82 00 92 00 71 16 01
+            93 02 03 14 2F 01 3E 54 05 00 00 00 1D 0E 1B 06 05 00 00 00 1D 06
+            14 DC 64 2D 03 01 55 16 01 15 19 02)
+       (|COMMON-LISP-USER|::|TRANSLATE-STRING| |COMMON-LISP|::|CLOSE| :|ABORT|)
+       (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|)
+       (|COMMON-LISP-USER|::|IN|) |COMMON-LISP|::|NIL| 1))
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|33 35 (DEFUN WRITE-OUT (DATA OUT-FILE) ...)-8|
+   #20Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 DA DC 32 9C C5 19 01)
+   (|COMMON-LISP-USER|::|WRITE-OUT| |SYSTEM|::|REMOVE-OLD-DEFINITIONS|
+    #Y(|COMMON-LISP-USER|::|WRITE-OUT|
+       #84Y(03 00 01 00 02 00 00 00 26 03 AD DA 38 05 72 0B 53 33 C6 45 63 B3
+            1B 0E 94 00 AC B3 38 02 71 96 84 02 16 01 83 00 AC 8D 9F 6E 16 01
+            AC 31 B1 16 01 41 05 00 00 02 1D 03 14 2F 02 46 54 05 00 00 00 1D
+            0E 1B 06 05 00 00 00 1D 06 14 DD 64 2D 03 02 55 19 04)
+       (:|OUTPUT| #.#'|COMMON-LISP|::|VALUES| |COMMON-LISP|::|CLOSE| :|ABORT|)
+       (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|)
+       (|COMMON-LISP-USER|::|DATA| |COMMON-LISP-USER|::|OUT-FILE|)
+       |COMMON-LISP|::|NIL| 1))
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|37 39 (WRITE-OUT (REVERSE #) "/Users/alexisrondeau/The Great Lisp Adventure/CL/A-small-practice.out")-9|
+   #20Y(00 00 00 00 00 00 00 00 20 01 DA 6F 01 72 63 DC 30 03 19 01)
+   ("/Users/alexisrondeau/The Great Lisp Adventure/CL/A-small-practice.in"
+    |COMMON-LISP-USER|::|TRANSLATE-FILE|
+    "/Users/alexisrondeau/The Great Lisp Adventure/CL/A-small-practice.out"
+    |COMMON-LISP-USER|::|WRITE-OUT|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
