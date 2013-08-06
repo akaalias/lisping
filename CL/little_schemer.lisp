@@ -746,3 +746,50 @@
 
 (value '(+ 1 10))
 				     
+;; skipping the multirembert and col
+
+;; Chapter 9
+
+(defun looking (a lat)
+  (keep-looking a (pick 1 lat) lat))
+
+(defun keep-looking (a sorn lat)
+  (cond ((numberp sorn) (keep-looking a (pick sorn lat) lat))
+	(t (eq sorn a))))
+
+(looking 'caviar '(6 2 4 caviar 5 7 3))
+
+(defun shift (pair)
+  (build (first (first pair))
+	 (build (second (first pair))
+		(second pair))))
+
+(shift '((a b) (c d)))
+
+(defun weight* (pora)
+  (cond ((atom? pora) 1)
+	(t (+ (* (weight* (first pora)) 2)
+	      (weight* (second pora))))))
+
+(weight* '(a (b c)))
+
+(defun shuffle (pora)
+  (cond ((atom? pora) pora)
+	((a-pair? (first pora)) (shuffle (revpair pora)))
+	(t (build (first pora)
+		  (shuffle (second pora))))))
+
+(shuffle '(a (b c)))
+
+(defun C (n)
+  (cond 
+    ((= 1 n) 1)
+    (t 
+     (cond ((evenp n) (C (/ n 2)))
+	   (t (C (1+ (* 3 n))))))))
+
+(C 20)
+	 
+
+
+
